@@ -1,0 +1,12 @@
+# Hidden Files
+.dockerignore
+.git
+.gitignore
+
+# Project Files
+docker-compose.yaml
+Dockerfile
+README.md
+
+# Build Artifacts
+main
