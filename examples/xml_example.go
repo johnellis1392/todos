@@ -1,4 +1,4 @@
-package main
+package examples
 
 import (
 	"encoding/xml"
@@ -48,7 +48,7 @@ func exampleEncoder() {
 	}
 }
 
-func main() {
+func xmlExample() {
 	fmt.Println("Example Marshal Indent:")
 	exampleMarshalIndent()
 	fmt.Println("")
