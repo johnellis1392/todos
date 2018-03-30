@@ -2,6 +2,10 @@ package model
 
 import (
 	"fmt"
+
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/dynamodb"
+	//"github.com/aws/aws-sdk-go/dynamodb/dynamodbattribute"
 )
 
 var (
@@ -13,6 +17,53 @@ func init() {
 	currentID = 0
 	RepoCreateTodo(Todo{Title: "Write Presentation"})
 	RepoCreateTodo(Todo{Title: "Host Meetup"})
+}
+
+type TodoDao interface {
+	FindById(id uint64) *Todo
+	List() []*Todo
+	Delete(id uint64)
+	Update(todo Todo) *Todo
+
+	Error() error
+}
+
+type TodoDaoImpl struct {
+	err    error
+	sess   *session.Session
+	dynamo *dynamodb.DynamoDB
+}
+
+func (dao TodoDaoImpl) FindById(id uint64) *Todo {
+	return nil
+}
+
+func (dao TodoDaoImpl) List() []*Todo {
+	return make([]*Todo, 0)
+}
+
+func (dao TodoDaoImpl) Delete(id uint64) {
+	return
+}
+
+func (dao TodoDaoImpl) Update(todo Todo) *Todo {
+	return nil
+}
+
+func (dao TodoDaoImpl) Error() error {
+	return dao.err
+}
+
+func New() TodoDao {
+	sess := session.Must(session.NewSession())
+	dynamo := dynamodb.New(sess)
+
+	todoDao := TodoDaoImpl{
+		sess:   sess,
+		dynamo: dynamo,
+	}
+
+	return todoDao
 }
 
 // RepoFindTodo - Find Todo
